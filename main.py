@@ -1,5 +1,4 @@
 import sys
-from datetime import datetime
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, \
     QLineEdit, QPushButton, QComboBox
 
@@ -7,6 +6,7 @@ from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, \
 class SpeedCalculator(QWidget):
     def __init__(self):
         super().__init__()
+
         self.setWindowTitle("Average Speed Calculator")
         grid = QGridLayout()
 
@@ -20,8 +20,9 @@ class SpeedCalculator(QWidget):
         self.metric_dropbox = QComboBox()
         self.metric_dropbox.addItems(['Metric (km)', 'Imperial (miles)'])
 
-        calculate_button = QPushButton("Calculate Age")
-        calculate_button.clicked.connect(self.calculate_speed())
+        calculate_button = QPushButton("Calculate Speed")
+        calculate_button.clicked.connect(self.calculate_speed)
+
         self.output_label = QLabel("")
 
         # Add widgets to grid
@@ -31,18 +32,18 @@ class SpeedCalculator(QWidget):
         grid.addWidget(time_label, 1, 0)
         grid.addWidget(self.time_line_edit, 1, 1)
         grid.addWidget(calculate_button, 2, 1)
-        grid.addWidget(self.output_label, 3, 0)
+        grid.addWidget(self.output_label, 3, 0, 1, 2)
 
         self.setLayout(grid)
 
     def calculate_speed(self):
         try:
             # Convert user input to float
-            distance_edit_input = float(self.distance_line_edit.text())
+            distance = float(self.distance_line_edit.text())
             time = float(self.time_line_edit.text())
 
             # Calculate average speed
-            speed = distance_edit_input / time
+            speed = distance/time
 
             # Display result
             self.output_label.setText(f"Average Speed: {speed}")
